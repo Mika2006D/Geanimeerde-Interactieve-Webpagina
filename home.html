@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front-end vs. Back-end</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
+    }
+    
+    h1 {
+        margin: 0;
+    }
+    
+    main {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 0 20px;
+    }
+    
+    section {
+        margin-bottom: 40px;
+    }
+    
+    h2 {
+        color: #333;
+    }
+    
+    img {
+        max-width: 100%;
+        display: block;
+        margin: 20px auto;
+    }
+    
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    li {
+        margin-bottom: 10px;
+    }
+</style>    
+</head>
+<body>
+    <header>
+        <h1>Front-end vs. Back-end</h1>
+    </header>
+    <main>
+        <section id="frontend">
+            <h2>Front-end</h2>
+            <h3>Front-end is wat de gebruiker ziet en waarmee ze kunnen interacteren op een website.</h3>
+            <p>Het front-end gedeelte van een website is wat de gebruiker daadwerkelijk ziet en mee interacteert.
+               Dit omvat de gebruikersinterface, zoals knoppen, formulieren, menu's en alle andere visuele elementen van een website.
+               Front-end ontwikkeling richt zich op het ontwerpen, ontwikkelen en het  van deze gebruikerservaringen. 
+               Technologieën die vaak gebruikt worden in front-end ontwikkeling zijn HTML (HyperText Markup Language) voor de structuur, CSS (Cascading Style Sheets) voor de vormgeving en lay-out, en JavaScript voor de interactieve functionaliteit.</p>
+               <br>
+            <p>Doe eens iets met het blauwe vierkant: Klik of ga met je muis erover heen</p>
+            <canvas id="gameCanvas" width="400" height="200"></canvas>
+
+<script>
+   // Verkrijg een referentie naar het canvas element
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+// Definieer de positie en snelheid van het object
+let x = canvas.width / 2;
+let y = canvas.height / 2;
+let dx = 2;
+let dy = -2;
+
+// Definieer de grootte van het object
+const objectWidth = 50;
+const objectHeight = 50;
+
+// Definieer of het object wordt gehoverd en of erop wordt geklikt
+let hovered = false;
+let clicked = false;
+
+// Definieer de functie om het spel te updaten
+function update() {
+    // Wis het canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Teken het object
+    ctx.beginPath();
+    if (clicked) {
+        // Als geklikt, teken een oogachtige vorm
+        ctx.arc(x + objectWidth / 4, y + objectHeight / 2, objectWidth / 4, 0, Math.PI * 2);
+        ctx.arc(x + (3 * objectWidth) / 4, y + objectHeight / 2, objectWidth / 4, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x + objectWidth / 4, y + objectHeight / 2, objectWidth / 8, 0, Math.PI * 2);
+        ctx.arc(x + (3 * objectWidth) / 4, y + objectHeight / 2, objectWidth / 8, 0, Math.PI * 2);
+        ctx.fillStyle = 'black';
+    } else if (hovered) {
+        // Als gehoverd, teken een rood rondje
+        ctx.arc(x + objectWidth / 2, y + objectHeight / 2, objectWidth / 2, 0, Math.PI * 2);
+        ctx.fillStyle = 'red';
+    } else {
+        // Als niet gehoverd, teken een blauw vierkant
+        ctx.rect(x, y, objectWidth, objectHeight);
+        ctx.fillStyle = 'blue';
+    }
+    ctx.fill();
+    ctx.closePath();
+
+    // Update de positie van het object
+    x += dx;
+    y += dy;
+
+    // Controleer of het object buiten het canvas gaat
+    if (x + objectWidth > canvas.width || x < 0) {
+        // Keer de bewegingsrichting om
+        dx *= -1;
+    }
+    if (y + objectHeight > canvas.height || y < 0) {
+        // Keer de bewegingsrichting om
+        dy *= -1;
+    }
+}
+
+// Definieer de gameloop functie
+function gameLoop() {
+    // Update het spel
+    update();
+
+    // Roep de gameloop opnieuw aan
+    requestAnimationFrame(gameLoop);
+}
+
+// Voeg event listeners toe voor hover events
+canvas.addEventListener('mouseover', function() {
+    hovered = true;
+});
+
+canvas.addEventListener('mouseout', function() {
+    hovered = false;
+});
+
+// Voeg event listener toe voor click event
+canvas.addEventListener('click', function() {
+    clicked = !clicked; // Toggle de waarde van clicked
+});
+
+// Start de gameloop
+gameLoop();
+
+</script>
+            <h3>Kenmerken van Front-end:</h3>
+            <ul>
+                <li>Gebruikersinterface</li>
+                <li>Lay-out en ontwerp</li>
+                <li>Interactieve elementen zoals knoppen en formulieren</li>
+            </ul>
+        </section>
+        <section id="backend">
+            <h2>Back-end</h2>
+            <p>Back-end is het gedeelte van de website dat niet zichtbaar is voor de gebruiker.</p>
+            <p>Het back-end gedeelte van een applicatie is het onzichtbare deel dat achter de schermen werkt om de functionaliteit van de applicatie mogelijk te maken. 
+               Dit omvat de server, de database en de applicatielogica. Back-end ontwikkelaars bouwen en onderhouden de server, schrijven code die communiceert met de database, verwerken gebruikersinvoer,
+               voeren berekeningen uit, en bieden de gegevens aan die nodig zijn voor de front-end. Veelgebruikte programmeertalen voor back-end ontwikkeling zijn onder andere Java, Python, Ruby, PHP en JavaScript (met behulp van Node.js). 
+               Frameworks zoals Django, Ruby on Rails, en Express.js vergemakkelijken het ontwikkelingsproces van back-end applicaties door standaardoplossingen aan te bieden voor veelvoorkomende taken.</p>
+            <img src="back-end.png" alt="Back-end diagram">
+            <h3>Kenmerken van Back-end:</h3>
+            <ul>
+                <li>Server</li>
+                <li>Applicatie</li>
+                <li>Database</li>
+            </ul>
+        </section>
+    </main>
+
+</body>
+</html>
